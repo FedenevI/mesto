@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+  </head>
+
+  <body class="body">
+    <div class="page">
+      <!-- Header start -->
+      <header class="header">
+        <div class="header__logo"></div>
+      </header>
+      <!-- Header end -->
+
+      <main class="main">
+        <!-- Profile start -->
+        <section class="profile">
+          <div class="profile__items">
+            <img
+              src="./images/avatar.jpg"
+              alt="аватар пользователя"
+              class="profile__avatar"
+            />
+            <div class="profile__info">
+              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <p class="profile__subtitle">Исследователь океана</p>
+              <button
+                type="button"
+                class="profile__edit-button"
+                aria-label="редактированить профиль"
+              ></button>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="profile__add-button"
+            aria-label="добавить карточку"
+          ></button>
+        </section>
+        <!-- Profile end -->
+
+        <!-- Elements start -->
+        <section class="elements">
+          <template id="place-template">
+            <article class="element">
+              <button class="element__trash-button" type="button"></button>
+              <img class="element__img" alt="" />
+              <div class="element__description">
+                <div class="element__sign">
+                  <h2 class="element__title"></h2>
+                  <button
+                    class="element__like-but"
+                    type="button"
+                    aria-label="Нравиться"
+                  ></button>
+                </div>
+              </div>
+            </article>
+          </template>
+        </section>
+        <!-- Elements start -->
+      </main>
+
+      <!-- Footer start -->
+      <footer class="footer">
+        <p class="footer__author">&#9426;2020 Mesto Russia</p>
+      </footer>
+      <!-- Footer start -->
+    </div>
+
+    <!-- Pop-up profile start -->
+    <div class="popup popup-profile">
+      <div class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form
+          action="name"
+          name="edit-profile"
+          id="edit-profile"
+          class="popup__form popup-profile__form"
+          novalidate
+        >
+          <label class="popup__input-box">
+            <input
+              id="profile-name"
+              minlength="2"
+              maxlength="40"
+              type="text"
+              required
+              name="title"
+              class="popup__input popup__input_type_name"
+              placeholder="Имя"
+            />
+            <span class="popup__input-error profile-name-error"></span>
+          </label>
+          <label class="popup__input-box">
+            <input
+              id="profile-job"
+              minlength="2"
+              maxlength="200"
+              type="text"
+              required
+              name="subtitle"
+              class="popup__input popup__input_type_job"
+              placeholder="Профессия"
+            />
+            <span class="popup__input-error profile-job-error"></span>
+          </label>
+          <button
+            type="submit"
+            class="popup__button popup__save-button popup__button_disabled"
+            aria-label="сохранить"
+          >
+            Сохранить
+          </button>
+        </form>
+        <button
+          class="popup__close-button popup__close-profile"
+          type="button"
+          aria-label="закрыть"
+        ></button>
+      </div>
+    </div>
+    <!-- Pop-up profile end -->
+
+    <!-- Pop-up card start -->
+    <div class="popup popup-card">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <form
+          name="edit-profile"
+          class="popup__form popup-card__form"
+          novalidate
+        >
+          <label class="popup__input-box">
+            <input
+              id="place-name"
+              minlength="2"
+              maxlength="30"
+              required
+              type="text"
+              name="placeName"
+              class="popup__input popup__input-title"
+              placeholder="Название"
+            />
+            <span class="popup__input-error place-name-error"></span>
+          </label>
+          <label class="popup__input-box">
+            <input
+              id="place-src"
+              type="url"
+              name="placeSrc"
+              required
+              class="popup__input popup__input-image"
+              placeholder="Ссылка на картинку"
+            />
+            <span class="popup__input-error place-src-error"></span>
+          </label>
+          <button
+            type="submit"
+            class="popup__button popup__create-button popup__button_disabled"
+            aria-label="сохранить"
+          >
+            Создать
+          </button>
+        </form>
+        <button
+          class="popup__close-button popup__close-card"
+          type="button"
+          aria-label="закрыть"
+        ></button>
+      </div>
+    </div>
+    <!-- Pop-up card end -->
+
+    <div class="popup popup-image">
+      <div class="popup-image__wrapper">
+        <button
+          type="button"
+          class="popup__close-button"
+          aria-label="Закрыть"
+        ></button>
+        <img class="popup-image__container" src="#" alt="#" />
+        <p class="popup-image__name"></p>
+      </div>
+    </div>
+  </body>
+</html>
