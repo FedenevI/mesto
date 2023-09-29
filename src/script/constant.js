@@ -35,9 +35,7 @@ const optionsValid =     {
   };
 
 const popupProfileOpenButton = document.querySelector(".profile__edit-button");
-const popupProfileCloseButton = document.querySelector(".popup__close-profile");
 const popupCardOpen = document.querySelector(".profile__add-button");
-const popupCardClose = document.querySelector(".popup__close-card");
 const cardsContent = document.querySelector(".elements");
 const profileFormNameInputEdit = document.querySelector(".popup__input_type_name");
 const profileFormJobInputEdit = document.querySelector(".popup__input_type_job");
@@ -47,9 +45,7 @@ const job = document.querySelector(".profile__subtitle");
 export {initialCards,
    optionsValid, 
    popupProfileOpenButton, 
-   popupProfileCloseButton, 
    popupCardOpen,
-   popupCardClose,
    cardsContent,
    profileFormNameInputEdit,
    profileFormJobInputEdit,

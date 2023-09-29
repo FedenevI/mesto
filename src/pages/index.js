@@ -1,28 +1,26 @@
 import '../pages/index.css';
 import Card from '../components/Card.js';
-import FormValidator from '../components/Formvalidator.js';
+import FormValidator from '../components/FormValidator.js';
 import {initialCards,
   optionsValid, 
   popupProfileOpenButton, 
-  popupProfileCloseButton, 
   popupCardOpen,
-  popupCardClose,
   cardsContent,
   profileFormNameInputEdit,
   profileFormJobInputEdit,
   name,
   job} from '../script/constant.js';
-import popupWithImage from '../components/popupWithImage.js';
+import popupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 
-const openImage = new popupWithImage('.popup-image');
-openImage.setEventListeners();
+const popupImage = new popupWithImage('.popup-image');
+popupImage.setEventListeners();
 
 const section = new Section({
   items: initialCards,
-  renderer: (card) => new Card(card, "#place-template", openImage.open).createCard()
+  renderer: (card) => createCard(card)
 }, '.elements')
 section.addInitialCards();
 
@@ -46,7 +44,7 @@ const popUpCard = new PopupWithForm ('.popup-card', (DataCard) => {
 popUpCard.setEventListeners();
 
 function createCard(card) {
-  return new Card(card, "#place-template", openImage.open).createCard();
+  return new Card(card, "#place-template", popupImage.open).createCard();
 }
 
 function prependCard(cardElement) {
@@ -55,15 +53,11 @@ function prependCard(cardElement) {
 
 popupCardOpen.addEventListener("click", () => popUpCard.open());
 
-popupCardClose.addEventListener("click", () => popUpCard.close()); // работает и без него
-
 popupProfileOpenButton.addEventListener("click", () => {
     profileFormNameInputEdit.value = name.textContent;
     profileFormJobInputEdit.value = job.textContent;
     popUpProfile.open();
 });
-
-popupProfileCloseButton.addEventListener("click", () => popUpProfile.close()); // работает и без него
 
 const formValidatorProfile = new FormValidator(optionsValid, document.querySelector(".popup__form"));
 const formValidatorCard = new FormValidator(optionsValid, document.querySelector(".popup-card__form"));
