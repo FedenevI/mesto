@@ -4,3 +4,7 @@
   color: #c4c4c4 !important;
   cursor: default !important;
 }
+
+.popup__button_avatar {
+  margin: 18px 48px 36px 36px;
+}

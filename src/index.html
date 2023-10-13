@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
+  
   </head>
 
   <body class="body">
@@ -18,14 +19,16 @@
         <!-- Profile start -->
         <section class="profile">
           <div class="profile__items">
+            <button type="button" class="profile__avatar-button">
             <img
-              src="<%=require('./images/avatar.jpg')%>"
+              src="#" 
               alt="аватар пользователя"
               class="profile__avatar"
             />
+            </button>
             <div class="profile__info">
-              <h1 class="profile__title">Жак-Ив Кусто</h1>
-              <p class="profile__subtitle">Исследователь океана</p>
+              <h1 class="profile__title"></h1>
+              <p class="profile__subtitle"></p>
               <button
                 type="button"
                 class="profile__edit-button"
@@ -50,11 +53,10 @@
               <div class="element__description">
                 <div class="element__sign">
                   <h2 class="element__title"></h2>
-                  <button
-                    class="element__like-but"
-                    type="button"
-                    aria-label="Нравиться"
-                  ></button>
+                  <div class ="element__like-section">
+                    <button class="element__like-but" type="button" aria-label="Нравиться"></button>
+                    <span class="element__counter"></span>
+                  </div>
                 </div>
               </div>
             </article>
@@ -159,7 +161,7 @@
           </label>
           <button
             type="submit"
-            class="popup__button popup__create-button popup__button_disabled"
+            class="popup__button popup__save-button popup__button_disabled"
             aria-label="сохранить"
           >
             Создать
@@ -173,6 +175,68 @@
       </div>
     </div>
     <!-- Pop-up card end -->
+    <!-- Pop-up AVATAR -->
+    <div class="popup popup-avatar">
+      <div class="popup__container">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form
+          name="editAvatar"
+          class="popup__form popup-avatar__form"
+          novalidate
+        >
+          <label class="popup__input-box">
+            <input
+              id="place-src"
+              type="url"
+              name="editAvatar"
+              required
+              class="popup__input popup__input-image"
+              placeholder="Ссылка на картинку"
+            />
+            <span class="popup__input-error place-src-error"></span>
+          </label>
+          <button
+            type="submit"
+            class="popup__button popup__save-button popup__button_disabled popup__button_avatar"
+            aria-label="сохранить"
+          >
+            Сохранить
+          </button>
+        </form>
+        <button
+          class="popup__close-button popup__close-card"
+          type="button"
+          aria-label="закрыть"
+        ></button>
+      </div>
+    </div>
+    <!-- Pop-up AVATAR END-->
+
+    <!-- pop-up delete -->
+  <div class="popup popup-delete">
+      <div class="popup__container">
+        <h2 class="popup__title popup__title_delete">Вы уверены?</h2>
+        <form
+          name="deleteCard"
+          class="popup__form popup-delete__form"
+          novalidate
+        >
+          <button
+            type="submit"
+            class="popup__button popup__delete-button popup__button_disabled"
+            aria-label="сохранить"
+          >
+            да
+          </button>
+        </form>
+        <button
+          class="popup__close-button popup__close-card"
+          type="button"
+          aria-label="закрыть"
+        ></button>
+      </div>
+    </div> 
+
 
     <div class="popup popup-image">
       <div class="popup-image__wrapper">
@@ -185,5 +249,7 @@
         <p class="popup-image__name"></p>
       </div>
     </div>
+
   </body>
+ 
 </html>
