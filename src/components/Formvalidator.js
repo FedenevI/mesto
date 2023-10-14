@@ -38,6 +38,13 @@ export default class FormValidator {
     });
   }
 
+  resetValidation() {
+    this._toggleButtonState(); 
+    this._inputList.forEach((inputElement) => {
+      this._hideError(inputElement) 
+    });
+
+  }
   _setEventListeners() {
     const toggleButtonAndCheckValidity = () => {
       this._toggleButtonState();
@@ -54,8 +61,9 @@ export default class FormValidator {
       event.preventDefault();
       this._toggleButtonState();
     });
-
     this._toggleButtonState();
+    
+    
   }
 
 

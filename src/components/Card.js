@@ -1,5 +1,6 @@
 export default class Card { 
     constructor(data, templateSelector, handleCardClick, openDeletePopup, addLikeFunc) { 
+      // console.log(data)
       this._data = data;
       this._name = data.name; 
       this._link = data.link; 
@@ -28,14 +29,12 @@ export default class Card {
       this._image = this._element.querySelector(".element__img");
       this._title = this._element.querySelector(".element__title");
       this._counter = this._element.querySelector('.element__counter');
-      this._initLikeBtn();
-      this._initRemoveCard();
-      this._initOnCardClick();
-      this._removeCardValidation();
-      this._likeBtnMassive();
       this._image.alt = this._name;
       this._image.src = this._link;
       this._title.textContent = this._name;
+      this._setEventListener();
+      this._removeCardValidation();
+      this._likeBtnMassive();
       return this._element;
     }
   
@@ -76,21 +75,17 @@ export default class Card {
       this._handleCardClick(this._data);
       };
   
-    _initLikeBtn() {
-      this._likeButton.addEventListener('click', () => {
-        this._likeBtn();
+    _setEventListener() {
+      this._image.addEventListener("click", () => {
+        this._onCardClick();
       });
-    }
-  
-    _initRemoveCard() {
+
       this._trashButton.addEventListener('click', () => {
         this._removeCard();
       })
-    }
-  
-    _initOnCardClick() {
-      this._image.addEventListener("click", () => {
-        this._onCardClick();
-    });
+
+      this._likeButton.addEventListener('click', () => {
+        this._likeBtn();
+      });
     }
   }

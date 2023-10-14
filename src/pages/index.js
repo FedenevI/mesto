@@ -7,8 +7,12 @@ import {
   popupCardOpen,
   profileFormNameInputEdit,
   profileFormJobInputEdit,
-  name,
-  job} from '../script/constant.js';
+  popupAvatarOpen,
+  popupProfileForm,
+  popupCardForm,
+  popupAvatarForm,
+  popupDeleteForm
+  } from '../script/constant.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
@@ -23,6 +27,11 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 }); 
+let userId;
+let userName;
+let userJob;
+let userAvatar;
+
 
 const deletePopupCard = new PopupDeleteCard('.popup-delete', ({card, cardID}) => {
   api.deleteCardID(cardID)
@@ -53,7 +62,6 @@ const popUpProfile = new PopupWithForm ('.popup-profile', (DataProfile) => {
   .then(res => {
     userInfo.setUserInfo({name: res.name, job: res.about, ava: res.avatar});
     popUpProfile.close();
-    formValidatorProfile.enableValidation();
   })
   .catch(error => console.error(`Ошибка при попытке редактировать профиль ${error}`))
   .finally(() => popUpProfile.submitBtn.textContent = 'Сохранить')
@@ -62,12 +70,11 @@ const popUpProfile = new PopupWithForm ('.popup-profile', (DataProfile) => {
 popUpProfile.setEventListeners();
 
 const popUpCard = new PopupWithForm ('.popup-card', (data) => {
-  Promise.all([api.getInfo(), api.addNewCard(data)])
-   .then(([dataUser, dataCard]) => {
-      dataCard.meID = dataUser._id;
+  Promise.all([api.addNewCard(data)])
+   .then(([dataCard]) => {
+      dataCard.meID = userId;
       section.addItemPrepend(createCard(dataCard));
       popUpCard.close()
-      formValidatorCard.enableValidation();
    })
    .catch(error => console.error(`Ошибка при попытке добавить карточку ${error}`))
    .finally(() => popUpCard.submitBtn.textContent = 'Сохранить')
@@ -79,7 +86,6 @@ const popUpAvatar = new PopupWithForm('.popup-avatar', (dataAva) => {
     .then(res => {
       userInfo.setUserInfo({name: res.name, job: res.about, ava: res.avatar});
       popUpAvatar.close();
-      formvalidatorAvatar.enableValidation();
     })
     .catch(error => console.error(`Ошибка при попытке редактировать аватар ${error}`))
     .finally(() => popUpAvatar.submitBtn.textContent = 'Сохранить')
@@ -105,31 +111,38 @@ function createCard(cardNew) {
   return card.createCard();
 }
 
-document.querySelector('.profile__avatar-button').addEventListener('click', () => popUpAvatar.open());
-
-popupCardOpen.addEventListener("click", () => popUpCard.open());
-
+popupAvatarOpen.addEventListener('click', () => {
+  formvalidatorAvatar.resetValidation();
+  popUpAvatar.open()
+});
+popupCardOpen.addEventListener("click", () => {formValidatorCard.resetValidation(), popUpCard.open()});
 popupProfileOpenButton.addEventListener("click", () => {
-    profileFormNameInputEdit.value = name.textContent;
-    profileFormJobInputEdit.value = job.textContent;
-     popUpProfile.open();
-  });
+  formValidatorProfile.resetValidation();
+  const infoObject = userInfo.getUserInfo();
+  profileFormNameInputEdit.value = infoObject.name;
+  profileFormJobInputEdit.value = infoObject.job;
+  popUpProfile.open();
+});
 
-const formValidatorProfile = new FormValidator(optionsValid, document.querySelector(".popup__form"));
-const formValidatorCard = new FormValidator(optionsValid, document.querySelector(".popup-card__form"));
-const formvalidatorAvatar = new FormValidator(optionsValid, document.querySelector('.popup-avatar__form'));
-const formvalidatorDelete = new FormValidator(optionsValid, document.querySelector('.popup-delete__form'));
+const formValidatorProfile = new FormValidator(optionsValid, popupProfileForm);
+const formValidatorCard = new FormValidator(optionsValid, popupCardForm);
+const formvalidatorAvatar = new FormValidator(optionsValid, popupAvatarForm);
+const formvalidatorDelete = new FormValidator(optionsValid, popupDeleteForm);
 
 formValidatorProfile.enableValidation();
 formValidatorCard.enableValidation();
 formvalidatorAvatar.enableValidation();
 formvalidatorDelete.enableValidation();
 
-
 Promise.all([api.getInfo(), api.getCards()])
   .then(([dataUser, dataCard]) => {
-    dataCard.forEach(element => element.meID = dataUser._id);
-    userInfo.setUserInfo({name: dataUser.name, job: dataUser.about, ava: dataUser.avatar});
-    section.addInitialCards(dataCard)
+    userId = dataUser._id;
+    userName = dataUser.name;
+    userJob = dataUser.about;
+    userAvatar = dataUser.avatar;  
+    dataCard.forEach(element => element.meID = userId);
+    userInfo.setUserInfo({name: userName, job: userJob, ava: userAvatar});
+    section.addInitialCards(dataCard);
+    console.log(dataCard)
   })
   .catch(error => console.error(`Ошибка при попытке загрузить карточки ${error}`))

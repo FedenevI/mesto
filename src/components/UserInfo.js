@@ -6,7 +6,7 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        return {
+        return  {
             name: this._userName.textContent,
             job: this._userJob.textContent,
         }

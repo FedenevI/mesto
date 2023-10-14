@@ -11,26 +11,28 @@ export default class Api {
         : Promise.reject
     }
 
+    _request(url, options) {
+        return fetch(url, options).then(this._checkRes)
+      }
+
     getInfo() {
-        return fetch(`${this._url}/users/me`, {
+        return this._request(`${this._url}/users/me`, {
             headers: {
                 authorization: this._authorization
             }
         })
-        .then(this._checkRes)
     }
 
     getCards() {
-        return fetch(`${this._url}/cards`, {
+        return this._request(`${this._url}/cards`, {
             headers: {
                 authorization: this._authorization
             }
         })
-        .then(this._checkRes)
     }
 
     setInfoProfile(data) {
-        return fetch(`${this._url}/users/me`, {
+        return this._request(`${this._url}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
@@ -38,22 +40,20 @@ export default class Api {
                 about: data.subtitle,
             })
         })
-        .then(this._checkRes)
     }
 
     setInfoAvatar(data) {
-        return fetch(`${this._url}/users/me/avatar`, {
+        return this._request(`${this._url}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
                 avatar: data.editAvatar,
             })
         })
-        .then(this._checkRes)
     }
 
     addNewCard(data){
-        return fetch(`${this._url}/cards`, {
+        return this._request(`${this._url}/cards`, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
@@ -61,36 +61,32 @@ export default class Api {
                 link: data.placeSrc,
             })
         })
-        .then(this._checkRes)
     }
 
     addLike(cardID) {
-        return fetch(`${this._url}/cards/${cardID}/likes`, {
+        return this._request(`${this._url}/cards/${cardID}/likes`, {
             method: 'PUT',
             headers: {
                 authorization: this._authorization,
             }
         })
-        .then(this._checkRes)
     }
 
     deleteLike(cardID) {
-        return fetch(`${this._url}/cards/${cardID}/likes`, {
+        return this._request(`${this._url}/cards/${cardID}/likes`, {
             method: 'DELETE',
             headers: {
                 authorization: this._authorization,
             }
         })
-        .then(this._checkRes)
     }
 
     deleteCardID(cardID) {
-        return fetch(`${this._url}/cards/${cardID}`, {
+        return this._request(`${this._url}/cards/${cardID}`, {
             method: 'DELETE',
             headers: {
                 authorization: this._authorization,
             }
         })
-        .then(this._checkRes)
     }
 }
